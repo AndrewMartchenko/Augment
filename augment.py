@@ -113,7 +113,7 @@ class RandomAffineTransform(ABC):
         # Assume x is a number
         return val_range
 
-    def transform_image(self, img):
+    def transform_image(self, img, border_val=0):
         ''' 
         Applies affine transform T to an image.
 
@@ -127,7 +127,7 @@ class RandomAffineTransform(ABC):
         out: ndarray transformed image
         '''
         nrows, ncols = img.shape[:2]
-        return cv2.warpAffine(img, self._T[:2], (ncols, nrows))
+        return cv2.warpAffine(src=img, M=self._T[:2], dsize=(ncols, nrows), borderValue=border_val)
 
     def transform_point(self, pt, rc_order=False):
         ''' 
